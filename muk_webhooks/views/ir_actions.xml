@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Copyright (c) 2017-today MuK IT GmbH.
+
+    This file is part of MuK Webhooks for Odoo
+    (see https://mukit.at).
+
+    MuK Proprietary License v1.0
+
+    This software and associated files (the "Software") may only be used
+    (executed, modified, executed after modifications) if you have
+    purchased a valid license from MuK IT GmbH.
+
+    The above permissions are granted for a single database per purchased
+    license. Furthermore, with a valid license it is permitted to use the
+    software on other databases as long as the usage is limited to a testing
+    or development environment.
+
+    You may develop modules based on the Software or that use the Software
+    as a library (typically by depending on it, importing it and using its
+    resources), but without copying any source code or material from the
+    Software. You may distribute those modules under the license of your
+    choice, provided that this license is compatible with the terms of the
+    MuK Proprietary License (For example: LGPL, MIT, or proprietary licenses
+    similar to this one).
+
+    It is forbidden to publish, distribute, sublicense, or sell copies of
+    the Software or modified copies of the Software.
+
+    The above copyright notice and this permission notice must be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+-->
+
+<odoo>
+
+	<record id="view_server_action_form" model="ir.ui.view">
+	    <field name="name">ir.actions.server.form</field>
+	    <field name="model">ir.actions.server</field>
+	    <field name="inherit_id" ref="base.view_server_action_form"/>
+	    <field name="arch" type="xml">
+	    	<xpath expr="//div[hasclass('oe_title')]" position="before">
+		    	<div class="oe_button_box" name="button_box" attrs="{'invisible': [('state', '!=', 'request')]}">
+	                <button 
+	                	class="oe_stat_button" 
+	                	name="action_open_preview" 
+	                	icon="fa-paper-plane" 
+	                	string="Preview" 
+	                	type="object" 
+	                />
+		    		<button 
+		    			attrs="{'invisible': [('request_logging', '=', False)]}"
+	                	class="oe_stat_button" 
+	                	name="action_open_report" 
+	                	icon="fa-bar-chart" 
+	                	string="Analytics" 
+	                	type="object" 
+	                />
+	            </div>
+	        </xpath>
+	        <xpath expr="//field[@name='state']" position="after">
+	        	<field name="request_show_logging" invisible="1" />
+	        	<field name="request_logging" widget="boolean_toggle" 
+	        			attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_show_logging', '=', False)]}" />
+	        </xpath>
+	        <xpath expr="//page[@name='code']" position="after">
+				<page string="Request" name="request" autofocus="autofocus" attrs="{'invisible': [('state', '!=', 'request')]}">
+					<group name="action_request" attrs="{'invisible': [('state', '!=', 'request')]}">
+		                <group>
+		                    <field name="request_address" on_change="1" widget="url"/>
+							<field name="request_secure" invisible="1" />
+		                    <field name="request_method"/>
+		                    <field name="request_timeout"/>
+		                </group>
+		                <group>
+		                	<field name="request_authentication" widget="boolean_toggle" />
+		                	<field name="request_adapt_headers" widget="boolean_toggle" />
+		                	<field name="request_adapt_payload" widget="boolean_toggle" />
+		                	<field name="request_process_response" widget="boolean_toggle" />
+		                	<field name="request_verify_ssl" widget="boolean_toggle"  attrs="{'invisible': [('request_secure', '=', False)]}" />
+		                </group>
+		            </group>
+				</page>
+	        	<page string="Authentication" name="request_authentication" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_authentication', '=', False)]}">
+					<group>
+						<group>
+		                	<field name="request_authentication_id" attrs="{'required': [('request_authentication', '!=', False)]}"/>
+		                	<field name="request_authentication_type" attrs="{'invisible': [('request_authentication_id', '=', False)]}"/>
+		                	<field name="request_authentication_grant" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}" />
+							<field name="request_authentication_token_url" widget="url" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}" />
+							<field name="request_authentication_include_client_key" widget="url" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}" />
+						</group>
+			            <group>
+							<field name="request_authentication_client_key" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}" />
+		                	<field name="request_authentication_client_secret" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}" />
+							<field name="request_authentication_token" attrs="{'invisible': [('request_authentication_type', '!=', 'token')]}" />
+			                <field name="request_authentication_user" attrs="{'invisible': ['&amp;', ('request_authentication_type', '!=', 'base'), '&amp;', ('request_authentication_type', '!=', 'digest'), ('request_authentication_type', '!=', 'oauth2')]}" />
+		                    <field name="request_authentication_password" password="True" attrs="{'invisible': ['&amp;', ('request_authentication_type', '!=', 'base'), '&amp;', ('request_authentication_type', '!=', 'digest'), ('request_authentication_type', '!=', 'oauth2')]}" />
+		                	<field name="request_authentication_parameter_ids" widget="many2many_tags" attrs="{'invisible': [('request_authentication_type', '!=', 'oauth2')]}"/>
+		                </group>
+		            </group>
+				</page>
+	        	<page string="Header Values" name="request_headers_value_ids" attrs="{'invisible': [('state', '!=', 'request')]}">
+					<field name="request_headers_value_ids">
+						<tree string="Headers" editable="bottom">
+							<field name="name"/>
+							<field name="value"/>
+						</tree>
+					</field>
+				</page>
+	        	<page string="Adapt Headers" name="request_headers_code" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_adapt_headers', '=', False)]}">
+					<field name="request_headers_code" widget="ace" options="{'mode': 'python'}" nolabel="1"/>
+				</page>
+				<page string="Payload Fields" name="request_field_ids" attrs="{'invisible': [('state', '!=', 'request')]}">
+	        		<p attrs="{'invisible': [('model_id', '!=', False)]}">
+	        			Please set a model before adding fields to the action.
+	        		</p>
+					<field name="request_field_ids" attrs="{'invisible': [('model_id', '=', False)]}">
+						<tree string="Fields">
+							<field name="name"/>
+							<field name="field_description"/>
+							<field name="ttype"/>
+						</tree>
+					</field>
+				</page>
+				<page string="Adapt Payload" name="request_payload" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_adapt_payload', '=', False)]}">
+	        		<field name="request_payload_code" widget="ace" options="{'mode': 'python'}" />
+				</page>
+				<page string="Process Response" name="request_process_response" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_process_response', '=', False)]}">
+	        		<field name="request_process_response_code" widget="ace" options="{'mode': 'python'}" />
+				</page>
+				<page string="Handle Error" name="request_process_error" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_process_response', '=', False)]}">
+	        		<field name="request_handle_error_code" widget="ace" options="{'mode': 'python'}" />
+				</page>
+				<page string="Logs" name="request_logging_ids" attrs="{'invisible': ['|', ('state', '!=', 'request'), ('request_logging', '=', False)]}">
+					<field name="request_logging_ids">
+						<tree string="Logs" create="0" edit="0">
+							<field name="create_date"/>
+							<field name="user_id" widget="many2one_avatar_user"/>
+							<field name="log_type" widget="badge" decoration-info="log_type == 'request'" decoration-danger="log_type == 'error'" />
+						</tree>
+					</field>
+				</page>
+	        </xpath>
+	    </field>
+	</record>
+	
+	<record id="view_webhook_action_tree" model="ir.ui.view">
+        <field name="name">ir.actions.server.form</field>
+        <field name="model">ir.actions.server</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="base.view_server_action_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+           		<attribute name="sample">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_webhook_action_form" model="ir.ui.view">
+        <field name="name">ir.actions.server.form</field>
+        <field name="model">ir.actions.server</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="view_server_action_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='name']" position="attributes">
+        		<attribute name="placeholder">e.g. Send Request</attribute>
+        	</xpath>
+      		<xpath expr="//field[@name='state']" position="attributes">
+           		<attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="action_webhook_action" model="ir.actions.act_window">
+		<field name="name">Actions</field>
+        <field name="res_model">ir.actions.server</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[['state', '=', 'request'], ['usage', '=', 'ir_actions_server']]</field>
+		<field name="context">{'default_state': 'request', 'key': 'server_action'}</field>
+		<field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_webhook_action_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_webhook_action_form')})]"/>
+		<field name="help" type="html">
+		    <p class="o_view_nocontent_smiling_face">
+                Create a new HTTP Request
+            </p>
+	    </field>
+	</record>
+        
+	<menuitem id="menu_webhook_action" name="Actions" sequence="2"
+		parent="main_menu_hooks" action="action_webhook_action"/>
+        
+</odoo>

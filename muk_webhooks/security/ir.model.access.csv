@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_request_preview_system,access_request_preview_system,model_muk_webhooks_preview,base.group_system,1,1,1,1
+access_request_authentication_system,access_request_authentication_system,model_muk_webhooks_authentication,base.group_system,1,1,1,1
+access_request_authentication_params_system,access_request_authentication_params_system,model_muk_webhooks_authentication_parameter,base.group_system,1,1,1,1
+access_request_headers_system,access_request_headers_system,model_muk_webhooks_header,base.group_system,1,1,1,1
+access_request_logging_system,access_request_logging_system,model_muk_webhooks_logging,base.group_system,1,0,0,1

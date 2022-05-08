@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Copyright (c) 2017-today MuK IT GmbH.
+
+    This file is part of MuK Webhooks for Odoo
+    (see https://mukit.at).
+
+    MuK Proprietary License v1.0
+
+    This software and associated files (the "Software") may only be used
+    (executed, modified, executed after modifications) if you have
+    purchased a valid license from MuK IT GmbH.
+
+    The above permissions are granted for a single database per purchased
+    license. Furthermore, with a valid license it is permitted to use the
+    software on other databases as long as the usage is limited to a testing
+    or development environment.
+
+    You may develop modules based on the Software or that use the Software
+    as a library (typically by depending on it, importing it and using its
+    resources), but without copying any source code or material from the
+    Software. You may distribute those modules under the license of your
+    choice, provided that this license is compatible with the terms of the
+    MuK Proprietary License (For example: LGPL, MIT, or proprietary licenses
+    similar to this one).
+
+    It is forbidden to publish, distribute, sublicense, or sell copies of
+    the Software or modified copies of the Software.
+
+    The above copyright notice and this permission notice must be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+-->
+
+<odoo>
+
+    <record id="view_webhook_logging_search" model="ir.ui.view">
+        <field name="name">muk_webhooks.logging.search</field>
+        <field name="model">muk_webhooks.logging</field>
+        <field name="arch" type="xml">
+			<search>
+				<field name="action_id" />
+				<field name="user_id" />
+				<filter string="Requests" name="request" domain="[('log_type', '!=',  'request')]"/>
+				<filter string="Errors" name="error" domain="[('log_type', '!=',  'error')]"/>
+				<separator/>
+				<filter string="Date" date="create_date" name="creation_date"/>
+				<group expand="0" name="group_by" string="Group By">
+					<filter string="Type" name="group_by_log_type" context="{'group_by': 'log_type'}"/>
+					<filter string="Hook" name="group_by_action_id" context="{'group_by': 'action_id'}"/>
+					<filter string="Date" name="group_by_create_date" context="{'group_by': 'create_date:day'}" />
+				</group>
+			</search>
+        </field>
+    </record>
+
+    <record id="view_webhook_logging_graph" model="ir.ui.view">
+        <field name="name">muk_webhooks.logging.graph</field>
+        <field name="model">muk_webhooks.logging</field>
+        <field name="arch" type="xml">
+			<graph type="line" sample="1">
+				<field name="create_date" type="row" interval="day"/>
+			</graph>
+        </field>
+    </record>
+
+    <record id="view_webhook_logging_pivot" model="ir.ui.view">
+        <field name="name">muk_webhooks.logging.pivot</field>
+        <field name="model">muk_webhooks.logging</field>
+        <field name="arch" type="xml">
+			<pivot sample="1">
+				<field name="action_id" type="row"/>
+				<field name="create_date" type="col" interval="month"/>
+				<field name="log_type" type="col"/>
+			</pivot>
+        </field>
+    </record>
+
+    <record id="view_webhook_logging_tree" model="ir.ui.view">
+        <field name="name">muk_webhooks.logging.tree</field>
+        <field name="model">muk_webhooks.logging</field>
+        <field name="arch" type="xml">
+			<tree sample="1">
+				<field name="create_date"/>
+				<field name="action_id"/>
+				<field name="user_id" widget="many2one_avatar_user"/>
+				<field name="log_type" widget="badge" decoration-info="log_type == 'request'" decoration-danger="log_type == 'error'" />
+			</tree>
+        </field>
+    </record>
+
+	<record id="view_webhooks_logging_form" model="ir.ui.view">
+        <field name="name">muk_webhooks.logging.form</field>
+        <field name="model">muk_webhooks.logging</field>
+        <field name="arch" type="xml">
+            <form>
+				<header>
+					<button name="action_trigger" type="object" string="Trigger Request"
+							confirm="This will trigger the action with the same context to resend the request. It could lead to a different request payload if the data hast changed in the meantime. Do you still want to proceed?"/>
+				</header>
+				<sheet>
+					<div class="oe_title" >
+						<h1>
+							<field name="name" />
+						</h1>
+					</div>
+					<group>
+						<group>
+							<field name="action_id" />
+							<field name="user_id" />
+						</group>
+						<group>
+							<field name="create_date"/>
+							<field name="log_type" />
+						</group>
+					</group>
+					<notebook>
+						<page string="Request" attrs="{'invisible': ['|', ('request', '=', False), ('request', '=', '')]}">
+							<field name="request" widget="ace" readonly="1" />
+						</page>
+						<page string="Context" attrs="{'invisible': ['|', ('context_data', '=', False), ('context_data', '=', '')]}">
+							<field name="context_data" widget="ace" readonly="1" />
+						</page>
+						<page string="Response" attrs="{'invisible': ['|', ('response', '=', False), ('response', '=', '')]}">
+							<field name="response" widget="ace" readonly="1" />
+						</page>
+						<page string="Result" attrs="{'invisible': ['|', ('result', '=', False), ('result', '=', '')]}">
+							<field name="result" widget="ace" readonly="1" />
+						</page>
+						<page string="Exception" attrs="{'invisible': ['|', ('exception', '=', False), ('exception', '=', '')]}">
+							<field name="exception" widget="ace" readonly="1" />
+						</page>
+					</notebook>
+				</sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_webhook_traffic" model="ir.actions.act_window">
+		<field name="name">Traffic</field>
+        <field name="res_model">muk_webhooks.logging</field>
+		<field name="view_mode">graph</field>
+		<field name="help" type="html">
+		    <p class="o_view_nocontent_smiling_face">
+                Traffic
+            </p>
+	    </field>
+	</record>
+
+    <record id="action_webhook_hook" model="ir.actions.act_window">
+		<field name="name">Analytics</field>
+        <field name="res_model">muk_webhooks.logging</field>
+		<field name="view_mode">pivot,tree,form</field>
+		<field name="help" type="html">
+		    <p class="o_view_nocontent_smiling_face">
+                Analytics
+            </p>
+	    </field>
+	</record>
+    
+    <record id="action_webhook_logging" model="ir.actions.act_window">
+		<field name="name">Logging</field>
+        <field name="res_model">muk_webhooks.logging</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+		    <p class="o_view_nocontent_smiling_face">
+                Request Logs
+            </p>
+	    </field>
+	</record>
+
+	<menuitem id="menu_webhook_traffic" name="Traffic" sequence="5"
+		parent="main_menu_analytics" action="action_webhook_traffic"/>
+
+	<menuitem id="menu_webhook_hook" name="Hooks" sequence="10"
+		parent="main_menu_analytics" action="action_webhook_hook"/>
+        
+	<menuitem id="menu_webhook_logging" name="Logging" sequence="15"
+		parent="main_menu_analytics" action="action_webhook_logging"/>
+		
+</odoo>
