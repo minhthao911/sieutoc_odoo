@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_tracking_order_form" model="ir.ui.view">
+            <field name="name">pos.tracking.order.form</field>
+            <field name="model">pos.tracking.order</field>
+            <field name="arch" type="xml">
+                <form string="Tracking Order">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="order_reference"/>
+                            <field name="order_id"/>
+                            <field name="user_id"/>
+                            <field name="time_action"/>
+                            <field name="action"/>
+                            <field name="json_data"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_tracking_order_tree" model="ir.ui.view">
+            <field name="name">pos.tracking.order.tree</field>
+            <field name="model">pos.tracking.order</field>
+            <field name="arch" type="xml">
+                <tree string="Tracking Order">
+                    <field name="time_action"/>
+                    <field name="action" decoration-success="action not in ['unlink_order', 'line_removing']" decoration-warning="action not in ['unlink_order', 'line_removing']" widget="badge" optional="show"/>
+                    <field name="order_id"/>
+                    <field name="name"/>
+                    <field name="order_reference"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_tracking_order_search" model="ir.ui.view">
+            <field name="name">pos.tracking.order.filter</field>
+            <field name="model">pos.tracking.order</field>
+            <field name="arch" type="xml">
+                <search string="Tracking Order">
+                    <field name="order_reference"/>
+                    <field name="order_id"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="action"/>
+                    <field name="time_action"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_tracking_order">
+            <field name="name">Tracking Order</field>
+            <field name="res_model">pos.tracking.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_tracking_order"
+                  action="action_pos_tracking_order"
+                  parent="menu_master_data"
+                  sequence="160"
+        />
+
+    </data>
+</odoo>
