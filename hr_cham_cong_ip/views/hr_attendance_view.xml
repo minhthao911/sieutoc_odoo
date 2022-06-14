@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_view_form_inherit_ip" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.ip</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <group>
+                    <group string="Check In">
+                        <field name="checkin_location" string="Location"/>
+                        <field name="ckeckin_ipaddress" string="IP Address"/>
+                        <field name="checkin_mask" string="Mac Address"/>
+                    </group>
+                     <group string="Check Out">
+                        <field name="checkout_location" string="Location"/>
+                        <field name="ckeckout_ipaddress" string="IP Address"/>
+                        <field name="checkout_mask" string="Mac Address"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
