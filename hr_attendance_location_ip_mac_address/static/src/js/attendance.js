@@ -31,8 +31,8 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
             };
             if (window.location.protocol == "https:") {
                 $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                    ipaddress = data.ip
-                    location_address = [data.city, data.region, data.postal, data.country_name]
+                    ipaddress = data.query
+                    location_address = [data.city, data.regionName, data.zip, data.country]
                     set_ipaddress_location(ipaddress, location_address)
                 });
             } else {
@@ -70,8 +70,8 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
 
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                        ipaddress = data.ip
-                        location_address = [data.city, data.region, data.postal, data.country_name]
+                        ipaddress = data.query
+                        location_address = [data.city, data.regionName, data.zip, data.country]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
@@ -108,8 +108,8 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 };
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                        ipaddress = data.ip
-                        location_address = [data.city, data.region, data.postal, data.country_name]
+                        ipaddress = data.query
+                        llocation_address = [data.city, data.regionName, data.zip, data.country]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
