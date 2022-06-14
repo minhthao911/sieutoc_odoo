@@ -30,9 +30,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 });
             };
             if (window.location.protocol == "https:") {
-                $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                    ipaddress = data.query
-                    location_address = [data.city, data.regionName, data.zip, data.country]
+                $.get('https://api.ip2location.io/?key=a890d2e1246c52fd796b1f4acd11b064&format=json', function(data) {
+                    ipaddress = data.ip
+                    location_address = [data.city_name, data.region_name, data.zip_code, data.country_name]
                     set_ipaddress_location(ipaddress, location_address)
                 });
             } else {
@@ -69,9 +69,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 };
 
                 if (window.location.protocol == "https:") {
-                    $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                        ipaddress = data.query
-                        location_address = [data.city, data.regionName, data.zip, data.country]
+                    $.get('https://api.ip2location.io/?key=a890d2e1246c52fd796b1f4acd11b064&format=json', function(data) {
+                        ipaddress = data.ip
+                        location_address = [data.city_name, data.region_name, data.zip_code, data.country_name]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
@@ -107,9 +107,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                     });
                 };
                 if (window.location.protocol == "https:") {
-                    $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
-                        ipaddress = data.query
-                        llocation_address = [data.city, data.regionName, data.zip, data.country]
+                    $.get('https://api.ip2location.io/?key=a890d2e1246c52fd796b1f4acd11b064&format=json', function(data) {
+                        ipaddress = data.ip
+                        location_address = [data.city_name, data.region_name, data.zip_code, data.country_name]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
