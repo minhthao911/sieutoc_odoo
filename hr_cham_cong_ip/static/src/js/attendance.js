@@ -30,7 +30,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 });
             };
             if (window.location.protocol == "https:") {
-                $.get('https://ipapi.co/json', function(data) {
+                $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
                     ipaddress = data.ip
                     location_address = [data.city, data.region, data.postal, data.country_name]
                     set_ipaddress_location(ipaddress, location_address)
@@ -69,7 +69,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 };
 
                 if (window.location.protocol == "https:") {
-                    $.get('https://ipapi.co/json', function(data) {
+                    $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
                         ipaddress = data.ip
                         location_address = [data.city, data.region, data.postal, data.country_name]
                         set_ipaddress_location(ipaddress, location_address)
@@ -107,7 +107,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                     });
                 };
                 if (window.location.protocol == "https:") {
-                    $.get('https://ipapi.co/json', function(data) {
+                    $.get('https://app2.jeoway.net/fake_by_dat.json', function(data) {
                         ipaddress = data.ip
                         location_address = [data.city, data.region, data.postal, data.country_name]
                         set_ipaddress_location(ipaddress, location_address)
