@@ -31,8 +31,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
             };
             if (window.location.protocol == "https:") {
                 $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
-                    ipaddress = data.query
-                    location_address = [data.city, data.regionName, data.zip, data.country]
+                    const obj = JSON.parse(data);
+                    ipaddress = obj.query
+                    location_address = [obj.city]
                     set_ipaddress_location(ipaddress, location_address)
                 });
             } else {
@@ -70,8 +71,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
 
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
-                        ipaddress = data.query
-                        location_address = [data.city, data.regionName, data.zip, data.country]
+                        const obj = JSON.parse(data);
+                        ipaddress = obj.query
+                        location_address = [obj.city]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
@@ -108,8 +110,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 };
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
-                        ipaddress = data.query
-                        location_address = [data.city, data.regionName, data.zip, data.country]
+                        const obj = JSON.parse(data);
+                        ipaddress = obj.query
+                        location_address = [obj.city]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
