@@ -32,7 +32,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
             if (window.location.protocol == "https:") {
                 $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
                     ipaddress = data.ipADD
-                    location_address = [data.diadiem]
+                    location_address = [data.diadiem, data.regionName, data.zip, data.country]
                     set_ipaddress_location(ipaddress, location_address)
                 });
             } else {
@@ -71,7 +71,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
                         ipaddress = data.ipADD
-                        location_address = [data.diadiem]
+                        location_address = [data.diadiem, data.regionName, data.zip, data.country]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
@@ -109,7 +109,7 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 if (window.location.protocol == "https:") {
                     $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
                         ipaddress = data.ipADD
-                        location_address = [data.diadiem]
+                        location_address = [data.diadiem, data.regionName, data.zip, data.country]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
