@@ -30,9 +30,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 });
             };
             if (window.location.protocol == "https:") {
-                $.get('https://api.ipgeolocation.io/ipgeo?apiKey=16ff66fcc37b4c3f881052a9f4a5745f', function(data) {
-                    ipaddress = data.ip
-                    location_address = [data.city, data.state_prov, data.zipcode, data.country_name]
+                $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
+                    ipaddress = data.ipADD
+                    location_address = [data.diadiem]
                     set_ipaddress_location(ipaddress, location_address)
                 });
             } else {
@@ -69,9 +69,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                 };
 
                 if (window.location.protocol == "https:") {
-                    $.get('https://api.ipgeolocation.io/ipgeo?apiKey=16ff66fcc37b4c3f881052a9f4a5745f', function(data) {
-                        ipaddress = data.ip
-                        location_address = [data.city, data.state_prov, data.zipcode, data.country_name]
+                    $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
+                        ipaddress = data.ipADD
+                        location_address = [data.diadiem]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
@@ -107,9 +107,9 @@ odoo.define('hr_attendance_location_ip_mac_address.attendance', function(require
                     });
                 };
                 if (window.location.protocol == "https:") {
-                    $.get('https://api.ipgeolocation.io/ipgeo?apiKey=16ff66fcc37b4c3f881052a9f4a5745f', function(data) {
-                        ipaddress = data.ip
-                        location_address = [data.city, data.state_prov, data.zipcode, data.country_name]
+                    $.get('https://app2.jeoway.net/35/odoo_check_in_out/getIP_and_Location.php', function(data) {
+                        ipaddress = data.ipADD
+                        location_address = [data.diadiem]
                         set_ipaddress_location(ipaddress, location_address)
                     });
                 } else {
