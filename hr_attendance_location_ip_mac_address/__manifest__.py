@@ -4,7 +4,7 @@
     'summary': "Get Attendance Check In/Out Location, IP & Mac Address",
     'description': "Get Attendance Check In/Out Location, IP & Mac Address",
 
-    'author': 'iPredict IT Solutions Pvt. Ltd.',
+    'author': 'iPredict IT Solutions Pvt. Ltd.(fix by Jw)',
     'website': 'http://ipredictitsolutions.com',
     'support': 'ipredictitsolutions@gmail.com',
 
