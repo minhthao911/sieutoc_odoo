@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*
-# TL Technology (thanhchatvn@gmail.com)
+# TL Technology (thanhchatvn@gmail.com) re
 # OPL-1 license
 # Not allow resale, editing source codes
 # License: Base on Odoo Proprietary License v1.0
