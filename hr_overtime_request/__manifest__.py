@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Probuse Consulting Service Pvt Ltd. See LICENSE file for full copyright and licensing details.
 {
-    'name' : 'Employee Overtime Request',
+    'name' : 'Employee Overtime Request 1',
     'license': 'Other proprietary',
     'version': '5.3.7',
     'author': 'Probuse Consulting Service Pvt. Ltd.',
