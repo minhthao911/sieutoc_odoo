@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": """Gantt Native view for Projects""",
+    "name": """Gantt Native view for Projects1""",
     "summary": """One price = web_gant_native, project_native, project_native_report_advance, project_native_exchange hr_holidays_gantt_native, mrp_gantt_native""",
     "category": "Project",
     "images": ['static/description/banner.gif'],
